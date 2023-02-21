@@ -5,6 +5,7 @@ import { Mongoose } from 'mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RestaurantModule } from './restaurant/restaurant.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { RestaurantModule } from './restaurant/restaurant.module';
     }),
     MongooseModule.forRoot(process.env.DB_URL),
     RestaurantModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
