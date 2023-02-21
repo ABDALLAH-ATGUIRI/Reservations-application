@@ -17,7 +17,7 @@ export class RestaurantService {
     const skip = resPerPage * (currentPage - 1);
 
     const keyword = query.keyword
-      ? { title: { $regex: query.keyword, $options: 'i' } }
+      ? { restaurantName: { $regex: query.keyword, $options: 'i' } }
       : {};
 
     const restaurants = await this.restaurantModule

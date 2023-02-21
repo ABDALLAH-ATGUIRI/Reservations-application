@@ -11,7 +11,7 @@ export class RestaurantController {
 
   @Get()
   async getAllRestaurants(@Query() query:ExpressQuery): Promise<Restaurant[]> {
-    return this.restaurantService.findAll();
+    return this.restaurantService.findAll(query);
   }
 
   @Post()
