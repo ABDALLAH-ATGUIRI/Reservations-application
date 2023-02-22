@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { Restaurant } from './schemas/restaurent.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
@@ -7,6 +8,7 @@ import { RestaurantSchema } from './schemas/restaurent.schema';
 
 @Module({
   imports: [
+    AuthModule,
     MongooseModule.forFeature([
       { name: 'Restaurant', schema: RestaurantSchema },
     ]),

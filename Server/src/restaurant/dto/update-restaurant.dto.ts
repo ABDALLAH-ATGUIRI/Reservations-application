@@ -1,5 +1,6 @@
 import { Specialty } from './../schemas/restaurent.schema';
-import { IsString,IsOptional,  IsEnum } from 'class-validator';
+import { IsString,IsOptional,IsEmpty, IsEnum } from 'class-validator';
+import { User } from 'src/auth/schema/user.schema';
 
 export class UpdateRestaurantDto {
 
@@ -22,6 +23,9 @@ export class UpdateRestaurantDto {
   @IsOptional()
   @IsEnum(Specialty , {message : "Please enter correct Specialty."} )
   readonly specialty: Specialty;
+
+  @IsEmpty({ message: 'Please enter correct category.' })
+  readonly user: User;
 }
 
 
