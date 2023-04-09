@@ -1,6 +1,13 @@
 import { User } from './../../auth/schema/user.schema';
-import { Specialty } from './../schemas/restaurent.schema';
-import { IsNotEmpty, IsString, IsEnum, IsEmpty } from 'class-validator';
+import { Location, Specialty } from './../schemas/restaurent.schema';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsEmpty,
+  isObject,
+  IsObject,
+} from 'class-validator';
 export class CreateRestaurantDto {
   @IsNotEmpty()
   @IsString()
@@ -10,8 +17,12 @@ export class CreateRestaurantDto {
   readonly menu: string;
 
   @IsNotEmpty()
+  @IsObject()
+  readonly location: Location;
+
+  @IsNotEmpty()
   @IsString()
-  readonly location: string;
+  readonly phone: string;
 
   @IsNotEmpty()
   @IsString()
@@ -20,7 +31,7 @@ export class CreateRestaurantDto {
   @IsNotEmpty()
   @IsEnum(Specialty, { message: 'Please enter correct Specialty.' })
   readonly specialty: Specialty;
-  
+
   @IsEmpty({ message: 'Please enter correct category.' })
   readonly user: User;
 }

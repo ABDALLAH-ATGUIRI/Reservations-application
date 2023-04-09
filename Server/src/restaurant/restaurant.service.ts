@@ -13,11 +13,11 @@ import { User } from 'src/auth/schema/user.schema';
 export class RestaurantService {
   constructor(
     @InjectModel(Restaurant.name)
-    private restaurantModule: mongoose.Model<Restaurant>,
+    private RestaurantModule: mongoose.Model<Restaurant>,
   ) {}
 
   async findAll(query: Query) {
-    const resPerPage = 2;
+    const resPerPage = Number(query.rowsPerPage) || 6;
     const currentPage = Number(query.page) || 1;
     const skip = resPerPage * (currentPage - 1);
 
@@ -25,16 +25,21 @@ export class RestaurantService {
       ? { restaurantName: { $regex: query.keyword, $options: 'i' } }
       : {};
 
-    const restaurants = await this.restaurantModule
-      .find({ ...keyword })
+    const restaurants = await this.RestaurantModule.find({ ...keyword })
       .limit(resPerPage)
       .skip(skip);
-    return restaurants;
+
+    // get count of rows
+    const count = await this.RestaurantModule.countDocuments({ ...keyword });
+
+    const result = { restaurants, count };
+
+    return result;
   }
 
   async create(restaurant: Restaurant, user: User): Promise<Restaurant> {
-    const data = Object.assign(restaurant , {user: user._id})
-    const res = await this.restaurantModule.create(restaurant);
+    const data = Object.assign(restaurant, { user: user._id });
+    const res = await this.RestaurantModule.create(restaurant);
     return res;
   }
 
@@ -45,7 +50,7 @@ export class RestaurantService {
       throw new BadRequestException('Please enter correct id.');
     }
 
-    const restaurant = await this.restaurantModule.findById(id);
+    const restaurant = await this.RestaurantModule.findById(id);
 
     if (!restaurant) {
       throw new NotFoundException('Restaurant not found.');
@@ -55,13 +60,13 @@ export class RestaurantService {
   }
 
   async updateById(id: string, restaurant: Restaurant): Promise<Restaurant> {
-    return await this.restaurantModule.findByIdAndUpdate(id, restaurant, {
+    return await this.RestaurantModule.findByIdAndUpdate(id, restaurant, {
       new: true,
       runValidators: true,
     });
   }
 
   async deleteById(id: string): Promise<Restaurant> {
-    return await this.restaurantModule.findByIdAndUpdate(id);
+    return await this.RestaurantModule.findByIdAndUpdate(id);
   }
 }

@@ -21,7 +21,7 @@ export class RestaurantController {
   constructor(private restaurantService: RestaurantService) {}
 
   @Get()
-  async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]> {
+  async getAllRestaurants(@Query() query: ExpressQuery): Promise<object> {
     return this.restaurantService.findAll(query);
   }
 
@@ -30,8 +30,8 @@ export class RestaurantController {
   async createRestaurant(
     @Body() restaurant: CreateRestaurantDto,
     @Req() req,
-  ): Promise<Restaurant> {    
-    return this.restaurantService.create(restaurant , req.user);
+  ): Promise<Restaurant> {
+    return this.restaurantService.create(restaurant, req.user);
   }
 
   @Get(':id')

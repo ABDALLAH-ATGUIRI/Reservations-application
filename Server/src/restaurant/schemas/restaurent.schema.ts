@@ -11,7 +11,10 @@ export enum Specialty {
   DESTINATION = 'Destination Restaurant',
   BALDI = 'Baldi',
 }
-
+export interface Location {
+  latitude: number;
+  longitude: number;
+}
 @Schema({
   timestamps: true,
 })
@@ -22,11 +25,14 @@ export class Restaurant {
   @Prop()
   menu: String;
 
-  @Prop()
-  location: String;
+  @Prop({ type: Object })
+  location: Location;
 
   @Prop()
   description: String;
+  
+  @Prop()
+  phone: string;
 
   @Prop()
   specialty: Specialty;

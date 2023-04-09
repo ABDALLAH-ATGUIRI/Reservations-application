@@ -1,5 +1,4 @@
 import { AuthModule } from './../auth/auth.module';
-import { Restaurant } from './schemas/restaurent.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
 import { RestaurantController } from './restaurant.controller';
